@@ -1,5 +1,3 @@
-__pycache__/
-*.pyc
+node_modules/
+dist/
 .env
-ascendra.db
-uploads/*.pdf
