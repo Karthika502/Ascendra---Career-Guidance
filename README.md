@@ -1,118 +1,346 @@
-# Ascendra — Agentic AI Career Intelligence Platform
+# 🚀 Ascendra – Agentic AI Career Intelligence Platform
 
-An AI placement mentor that takes a student from **resume → analysis → job match →
-cover letter → interview prep**, built as a FastAPI backend + React (Vite/Tailwind)
-frontend.
+> **Agentic AI for Smarter Career Success**
 
-This is the full MVP scaffold covering Features 1–7 from the spec, in priority order.
-It runs end-to-end even without API keys (with rule-based fallbacks), and gets
-noticeably smarter once you add a free Groq key.
+Ascendra is an **AI-powered Career Intelligence Platform** designed to assist students and fresh graduates throughout their placement journey. Instead of relying on multiple platforms for resume building, job searching, cover letter creation, and interview preparation, Ascendra unifies these processes into a single intelligent platform.
 
-## What's implemented
+The platform leverages **Agentic AI** to understand a student's profile, analyze resumes, recommend suitable career opportunities, generate professional application documents, and prepare users for interviews.
 
-| Priority | Feature | Status |
-|---|---|---|
-| 1 | Student Profile | ✅ |
-| 1 | Resume Upload + Parsing (PyMuPDF) | ✅ |
-| 2 | AI Resume Analysis (0–100 score + reasoning) | ✅ |
-| 3 | Smart Job Recommendation (live API + AI matching, local fallback) | ✅ |
-| 4 | Cover Letter Generator | ✅ |
-| 5 | Interview Preparation | ✅ |
-| 6 | Dashboard | ✅ |
+---
 
-No login system, exactly as spec'd — the frontend just remembers your student ID
-in the browser.
+# 📌 Problem Statement
 
-## Project structure
+Students often struggle with:
 
+* Creating ATS-friendly resumes
+* Finding jobs that match their skills
+* Writing personalized cover letters
+* Preparing for interviews
+* Managing multiple placement resources across different platforms
+
+Existing solutions address these problems individually, forcing students to switch between several tools.
+
+Ascendra solves this by providing a single AI-powered platform that guides students through every stage of the placement process.
+
+---
+
+# 🎯 Project Objective
+
+Build an intelligent career assistant capable of:
+
+* Understanding student profiles
+* Parsing and analyzing resumes
+* Recommending suitable internships and jobs
+* Building ATS-friendly resumes
+* Generating personalized cover letters
+* Preparing students for interviews
+
+---
+
+# ✨ Key Features
+
+* 👤 Student Profile Management
+* 📄 Resume Upload & Parsing
+* 📊 AI Resume Analysis
+* 💼 Smart Job Recommendations
+* 📝 AI Resume Builder
+* ✉️ AI Cover Letter Generator
+* 🎤 AI Interview Preparation
+* 📈 Career Dashboard
+
+---
+
+# 🤖 AI Agents
+
+Ascendra follows an **Agentic AI Architecture**, where each agent performs a specialized task.
+
+---
+
+## 1️⃣ Resume Parser Agent
+
+**Class:** `ResumeParserAgent`
+
+### Responsibilities
+
+* Extract text from uploaded resumes
+* Identify skills
+* Extract education
+* Detect projects
+* Identify certifications
+* Extract work experience
+* Parse contact information
+
+### Output
+
+Structured resume data in JSON format.
+
+---
+
+## 2️⃣ Resume Analyzer Agent
+
+**Class:** `ResumeAnalyzerAgent`
+
+### Responsibilities
+
+* Evaluate resume quality
+* Calculate Resume Score (0–100)
+* Detect strengths
+* Detect weaknesses
+* Identify missing skills
+* Suggest improvements
+
+### Output
+
+Detailed AI-powered resume analysis report.
+
+---
+
+## 3️⃣ Smart Job Matcher Agent
+
+**Class:** `JobMatcherAgent`
+
+### Responsibilities
+
+* Fetch live job listings
+* Compare resume against job descriptions
+* Calculate job match percentage
+* Explain recommendation reasoning
+* Highlight missing skills
+
+### Output
+
+Ranked list of personalized job recommendations.
+
+---
+
+## 4️⃣ Resume Builder Agent
+
+**Class:** `ResumeBuilderAgent`
+
+### Responsibilities
+
+* Generate professional resumes
+* Improve uploaded resumes
+* Rewrite weak bullet points
+* Optimize ATS compatibility
+* Enhance professional summaries
+* Export resumes as downloadable PDFs
+
+### Output
+
+Professional ATS-friendly resume.
+
+---
+
+## 5️⃣ Cover Letter Generator Agent
+
+**Class:** `CoverLetterAgent`
+
+### Responsibilities
+
+* Analyze student profile
+* Understand target job description
+* Generate personalized cover letters
+* Align skills with company requirements
+
+### Output
+
+Professional company-specific cover letter.
+
+---
+
+## 6️⃣ Interview Preparation Agent
+
+**Class:** `InterviewPrepAgent`
+
+### Responsibilities
+
+* Analyze resume
+* Analyze job description
+* Generate personalized interview questions
+* Create HR questions
+* Create technical questions
+* Generate behavioral questions
+* Generate resume-based questions
+
+### Output
+
+Personalized interview preparation report.
+
+---
+
+# 🔄 Application Workflow
+
+```text
+Student Profile
+        │
+        ▼
+Resume Upload
+        │
+        ▼
+Resume Parser Agent
+        │
+        ▼
+Resume Analyzer Agent
+        │
+        ▼
+Smart Job Matcher Agent
+        │
+        ▼
+Job Recommendations
+        │
+        ▼
+Select Job
+        │
+        ├──────────────┐
+        ▼              ▼
+Resume Builder     Cover Letter Generator
+        │              │
+        └──────┬───────┘
+               ▼
+Interview Preparation Agent
+               ▼
+Career Dashboard
 ```
+
+---
+
+# 🖥️ Technology Stack
+
+## Frontend
+
+* React.js
+* Tailwind CSS
+* Axios
+* Vite
+
+## Backend
+
+* FastAPI
+* Python
+
+## Database
+
+* SQLite
+* SQLAlchemy
+
+## Artificial Intelligence
+
+* Groq API
+* Llama Models
+
+## Resume Parsing
+
+* PyMuPDF
+
+## PDF Generation
+
+* ReportLab / WeasyPrint
+
+---
+
+# 📂 Project Structure
+
+```text
 ascendra/
-  backend/
-    main.py                 FastAPI app + router wiring
-    database.py              SQLite + SQLAlchemy session setup
-    models.py                 Student, Resume, CoverLetter, InterviewSet
-    ai/
-      groq_client.py          Shared Groq (Llama) wrapper
-      resume_parser.py         PyMuPDF text extraction + structured parsing
-      resume_analyzer.py        0-100 scoring engine
-      job_matcher.py            Live job fetch (JSearch/Adzuna/local) + AI matching
-      cover_letter.py            Cover letter generation
-      interview_generator.py      Personalized interview questions
-    routes/                  One router per feature (profile, resume, jobs, ...)
-    data/local_jobs.json     Fallback dataset when no job API key is set
-  frontend/
-    src/pages/               Landing, Profile, ResumeAnalysis, JobRecommendations,
-                              JobDetails, CoverLetter, Interview, Dashboard
-    src/components/          Navbar, Card
+
+├── backend/
+│   ├── ai/
+│   │   ├── groq_client.py
+│   │   ├── resume_parser.py
+│   │   ├── resume_analyzer.py
+│   │   ├── job_matcher.py
+│   │   ├── resume_builder.py
+│   │   ├── cover_letter.py
+│   │   └── interview_generator.py
+│   │
+│   ├── routes/
+│   ├── models/
+│   ├── database.py
+│   └── main.py
+│
+├── frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   ├── components/
+│   │   ├── services/
+│   │   └── assets/
+│
+├── uploads/
+├── database/
+└── README.md
 ```
 
-## 1. Backend setup
+---
 
-```bash
-cd backend
-python3 -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
-pip install -r requirements.txt
+# 📱 Application Pages
 
-cp .env.example .env
-# then edit .env and add your GROQ_API_KEY (free at https://console.groq.com/keys)
+* Landing Page
+* Student Profile
+* Resume Upload
+* Resume Analysis
+* Job Recommendations
+* Job Details
+* Resume Builder
+* Cover Letter Generator
+* Interview Preparation
+* Dashboard
 
-uvicorn main:app --reload --port 8000
-```
+---
 
-The API is now live at `http://localhost:8000` — interactive docs at
-`http://localhost:8000/docs`.
+# 🎨 UI Design
 
-**Without a `GROQ_API_KEY`**, every AI module automatically falls back to a
-rule-based version (heuristic resume scoring, skill-overlap job matching, template
-cover letters/questions) so the app still fully works while you get your key.
+* Modern & Minimal
+* Fully Responsive
+* Blue–Purple Gradient Theme
+* Rounded Components
+* Soft Shadows
+* Clean Typography
+* User-Friendly Navigation
 
-**Job listings**: add `JSEARCH_API_KEY` (RapidAPI) or `ADZUNA_APP_ID` +
-`ADZUNA_APP_KEY` to `.env` for live jobs. Without either, Ascendra uses
-`backend/data/local_jobs.json` (10 realistic sample listings) so job matching
-works out of the box too.
+---
 
-## 2. Frontend setup
+# 🎯 Target Users
 
-```bash
-cd frontend
-npm install
-cp .env.example .env    # VITE_API_BASE=http://localhost:8000
-npm run dev
-```
+* College Students
+* Final-Year Students
+* Fresh Graduates
+* Internship Seekers
+* Entry-Level Professionals
 
-Open `http://localhost:5173`.
+---
 
-## 3. Try the full flow
+# 🌟 Future Scope
 
-1. **Profile** — fill in your details and skills.
-2. **Resume** — upload a PDF resume → get parsed data + AI score/strengths/gaps.
-3. **Jobs** — see ranked matches with reasoning and missing skills.
-4. **Job Details** → pick a job → **Cover Letter** or **Interview Prep**.
-5. **Dashboard** — everything in one place.
+The current version focuses on the core placement workflow. Planned future enhancements include:
 
-## Notes on the spec's tech choices
+* Auto Apply Agent
+* LinkedIn Integration
+* GitHub Integration
+* Skill Gap Analysis
+* Career Roadmap Generator
+* Placement Readiness Analysis
+* Career Mentor Agent
+* Email Notifications
+* Salary Prediction
+* Multi-Agent Collaboration
 
-- **AI**: Groq API running Llama (`llama-3.3-70b-versatile` by default, configurable
-  via `GROQ_MODEL`) — fast and free-tier friendly, matches the spec.
-- **Resume parsing**: PyMuPDF (`fitz`) for text extraction, then the AI structures
-  it into skills/education/projects/certifications/experience/contact.
-- **DB**: SQLite via SQLAlchemy — zero setup, matches the spec.
-- **Jobs**: JSearch preferred, Adzuna alternative, local dataset fallback — exactly
-  the priority order in the spec.
+---
 
-## What's deliberately NOT built (per spec's "Future Scope")
+# 💡 Why Ascendra?
 
-Auto-apply agent, browser automation, LinkedIn/GitHub integration, skill roadmap,
-application tracking, email notifications, analytics dashboard, salary prediction,
-offer comparison, multi-agent collaboration. These are explicitly out of MVP scope.
+Unlike conventional job portals, Ascendra acts as an intelligent career companion that not only recommends opportunities but also improves application quality and interview readiness through specialized AI agents.
 
-## Suggested next steps once this is running
+By combining resume intelligence, job matching, document generation, and interview preparation into one seamless experience, Ascendra simplifies the placement journey and empowers students to confidently pursue their dream careers.
 
-1. Get a free Groq API key and drop it into `backend/.env` — this is the single
-   biggest quality jump.
-2. Get a JSearch (RapidAPI) key for real, current job listings.
-3. Polish the resume upload flow with a progress indicator for the AI analysis step
-   (it typically takes a few seconds).
-4. If you want persistence across browser sessions instead of just localStorage,
-   add a simple login later — the spec deliberately skips this for the MVP.
+---
+
+# 👨‍💻 Developed For
+
+Hackathons • Academic Projects • Career Assistance Platforms • AI-Based Recruitment Solutions
+
+---
+
+## 📜 License
+
+This project is developed for educational, research, and hackathon purposes.
