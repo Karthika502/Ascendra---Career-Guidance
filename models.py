@@ -4,7 +4,6 @@ from datetime import datetime
 
 SENSITIVE_FIELDS = {"password_hash", "password"}
 
-
 def serialize_doc(doc: Optional[dict]) -> Optional[dict]:
     """Convert a MongoDB document into an API-friendly dict (string id, no secrets)."""
     if doc is None:
